@@ -12,17 +12,20 @@ pickal_list=[]
 def pickal_detail(main_class):
     # print main_class
     for i in main_class:
-        pickal_data={}
-        # print i
-        poster = i.find('div', {'class': '_3nWP'}).img['src']
-        # print poster
-        name = i.find('div',{'class':'_2apC'}).getText() 
-        # print name
-        rupees=i.find('div',{'class':'_1kMS'}).getText()
-        # print rupees
-        pickal_data["name"] = name
-        pickal_data["poster"] = poster
-        pickal_data["price"] = rupees
-        pickal_list.append(pickal_data)
+        inside_class=i.findAll('div',{'class':'_3WhJ'})
+        for j in inside_class:
+
+            pickal_data={}
+            # print i
+            poster = j.find('div', {'class': '_3nWP'}).img['src']
+            # print poster
+            name = j.find('div',{'class':'_2apC'}).getText() 
+            # print name
+            rupees=j.find('div',{'class':'_1kMS'}).getText()
+            # print rupees
+            pickal_data["name"] = name
+            pickal_data["poster"] = poster
+            pickal_data["price"] = rupees
+            pickal_list.append(pickal_data)
     return pickal_list
 pprint.pprint (pickal_detail(main_class))
