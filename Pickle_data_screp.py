@@ -1,3 +1,4 @@
+
 import requests
 from bs4 import BeautifulSoup
 import pprint
@@ -6,19 +7,23 @@ pickal_data_link=requests.get("https://paytmmall.com/shop/search?q=pickles&from=
 # print pickal_data_link
 soup=BeautifulSoup(pickal_data_link,'lxml')
 # print soup
-
-def pickal_detail(soup):
-
-    pickal_data={}
-    poster = soup.find('div', {'class': '_3nWP'}).img['src']
-    # print poster
-    name = soup.find('div',{'class':'_2apC'}).getText() 
-    # print name
-    rupees=soup.find('div',{'class':'_1kMS'}).getText()
-    # print rupees
-    pickal_data["name"] = name
-    pickal_data["poster"] = poster
-    pickal_data["price"] = rupees
-
-    return pickal_data
-print (pickal_detail(soup))
+class_by=soup.find('div', {'class': '_3RA-'})
+main_class=class_by.findAll('div',{'class':'_1fje'})
+pickal_list=[]
+def pickal_detail(main_class):
+    # print main_class
+    for i in main_class:
+        pickal_data={}
+        # print i
+        poster = i.find('div', {'class': '_3nWP'}).img['src']
+        # print poster
+        name = i.find('div',{'class':'_2apC'}).getText() 
+        # print name
+        rupees=i.find('div',{'class':'_1kMS'}).getText()
+        # print rupees
+        pickal_data["name"] = name
+        pickal_data["poster"] = poster
+        pickal_data["price"] = rupees
+        pickal_list.append(pickal_data)
+    return pickal_list
+pprint.pprint (pickal_detail(main_class))
